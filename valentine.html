@@ -62,27 +62,36 @@
   </div>
 
   <script>
-    const noBtn = document.getElementById("no");
+  const noBtn = document.getElementById("no");
+  const container = document.querySelector(".buttons");
 
-    noBtn.addEventListener("mouseenter", () => {
-      const container = document.querySelector(".buttons");
-      const maxX = container.clientWidth - noBtn.offsetWidth;
-      const maxY = container.clientHeight - noBtn.offsetHeight;
+  function moveButton() {
+    const maxX = container.clientWidth - noBtn.offsetWidth;
+    const maxY = container.clientHeight - noBtn.offsetHeight;
 
-      const randomX = Math.random() * maxX;
-      const randomY = Math.random() * maxY;
+    const randomX = Math.random() * maxX;
+    const randomY = Math.random() * maxY;
 
-      noBtn.style.left = randomX + "px";
-      noBtn.style.top = randomY + "px";
-    });
+    noBtn.style.left = randomX + "px";
+    noBtn.style.top = randomY + "px";
+  }
 
-    function yesClicked() {
-      document.body.innerHTML = `
-        <h1 style="color:white;">Pattu said YES!!! 💍😍</h1>
+  // Desktop hover
+  noBtn.addEventListener("mouseenter", moveButton);
+
+  // Mobile touch
+  noBtn.addEventListener("touchstart", function(e) {
+    e.preventDefault();   // prevents click
+    moveButton();
+  });
+
+  function yesClicked() {
+    document.body.innerHTML = `
+      <h1 style="color:white;">Pattu said YES!!! 💍😍</h1>
         <p style="font-size:24px;color:white;">Forever starts now ❤️</p>
-      `;
-    }
-  </script>
+    `;
+  }
+</script>
 
 </body>
 </html>
