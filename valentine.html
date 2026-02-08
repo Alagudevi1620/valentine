@@ -1,96 +1,130 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
-  <title>Important Question 💖</title>
+  <title>Important Question Oiiii❤️</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
     body {
+      margin: 0;
       height: 100vh;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+      font-family: Arial, sans-serif;
       overflow: hidden;
     }
 
-    h1 {
-      color: #fff;
-      margin-bottom: 40px;
+    .wrapper {
+      text-align: center;
+      color: white;
     }
 
-    .buttons {
+    .container {
       position: relative;
-      width: 300px;
-      height: 150px;
+      width: 320px;
+      height: 260px;
+      margin: auto;
+      overflow: hidden;
     }
 
     button {
-      padding: 15px 30px;
+      position: absolute;
+      padding: 12px 25px;
       font-size: 18px;
       border: none;
       border-radius: 30px;
       cursor: pointer;
-      transition: 0.2s;
-      position: absolute;
+      white-space: nowrap;
     }
 
     #yes {
-      background: #4CAF50;
+      background: #28a745;
       color: white;
-      left: 50%;
-      transform: translateX(-50%);
+      left: 100px;
+      bottom: 15px;
     }
 
     #no {
-      background: #f44336;
+      background: #dc3545;
       color: white;
-      left: 50%;
-      top: 70px;
-      transform: translateX(-50%);
+      left: 110px;
+      top: 20px;
     }
   </style>
 </head>
+
 <body>
 
-  <h1>Will you marry me? 💍❤️</h1>
+<div class="wrapper">
+  <h1>Oiiiii Will you marry me? 💍❤️</h1>
 
-  <div class="buttons">
-    <button id="yes" onclick="yesClicked()">Yes 💖</button>
+  <div class="container" id="box">
+    <button id="yes">Yes 💖</button>
     <button id="no">No 💔</button>
   </div>
+</div>
 
-  <script>
+<script>
+  const yesBtn = document.getElementById("yes");
   const noBtn = document.getElementById("no");
-  const container = document.querySelector(".buttons");
+  const container = document.getElementById("box");
 
-  function moveButton() {
+  function isOverlapping(x, y) {
+    const yesRect = yesBtn.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
+
+    const noRect = {
+      left: containerRect.left + x,
+      top: containerRect.top + y,
+      right: containerRect.left + x + noBtn.offsetWidth,
+      bottom: containerRect.top + y + noBtn.offsetHeight
+    };
+
+    return !(
+      noRect.right < yesRect.left ||
+      noRect.left > yesRect.right ||
+      noRect.bottom < yesRect.top ||
+      noRect.top > yesRect.bottom
+    );
+  }
+
+  function moveNoButton() {
     const maxX = container.clientWidth - noBtn.offsetWidth;
     const maxY = container.clientHeight - noBtn.offsetHeight;
 
-    const randomX = Math.random() * maxX;
-    const randomY = Math.random() * maxY;
+    let x, y, attempts = 0;
 
-    noBtn.style.left = randomX + "px";
-    noBtn.style.top = randomY + "px";
+    do {
+      x = Math.random() * maxX;
+      y = Math.random() * maxY;
+      attempts++;
+    } while (isOverlapping(x, y) && attempts < 50);
+
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
   }
 
-  // Desktop hover
-  noBtn.addEventListener("mouseenter", moveButton);
-
-  // Mobile touch
-  noBtn.addEventListener("touchstart", function(e) {
-    e.preventDefault();   // prevents click
-    moveButton();
+  // Works for mouse + touch
+  noBtn.addEventListener("pointerenter", moveNoButton);
+  noBtn.addEventListener("pointerdown", function(e) {
+    e.preventDefault();
+    moveNoButton();
   });
 
-  function yesClicked() {
+  yesBtn.addEventListener("click", function() {
     document.body.innerHTML = `
-      <h1 style="color:white;">Pattu said YES!!! 💍😍</h1>
-        <p style="font-size:24px;color:white;">Forever starts now ❤️</p>
+      <div style="height:100vh;display:flex;flex-direction:column;
+                  justify-content:center;align-items:center;
+                  background:linear-gradient(135deg,#ff758c,#ff7eb3);
+                  color:white;text-align:center;">
+        <h1 style="font-size:38px;">Pattu said YES!!! 💍😍</h1>
+        <p style="font-size:22px;">Forever starts now ❤️</p>
+      </div>
     `;
-  }
+  });
 </script>
 
 </body>
